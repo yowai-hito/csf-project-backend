@@ -17,4 +17,3 @@ jobs:
         heroku_app_name: "chat-app-iss1241"
         heroku_email: ${{secrets.email}}
         branch: ${{github.ref_name}}
-        appdir: "server"
