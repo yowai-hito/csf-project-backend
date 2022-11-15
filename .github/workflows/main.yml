@@ -1,0 +1,20 @@
+name: Deploy to Heroku
+on:
+  push:
+    branches:
+    - "release"
+  workflow_dispatch:
+jobs:
+  deploy_to_heroku:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout src
+      uses: actions/checkout@v2
+    - name: Deploy to Heroku
+      uses: akhileshns/heroku-deploy@v3.12.12
+      with:
+        heroku_api_key: ${{secrets.HEROKU_KEY}}
+        heroku_app_name: "chat-app-iss1241"
+        heroku_email: ${{secrets.email}}
+        branch: ${{github.ref_name}}
+        appdir: "server"
