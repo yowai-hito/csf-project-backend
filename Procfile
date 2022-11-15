@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT $JAVA_OPTS -D -jar target/diary-spring-0.0.1-SNAPSHOT.jar
