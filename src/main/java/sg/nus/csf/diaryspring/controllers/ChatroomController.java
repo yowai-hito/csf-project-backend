@@ -65,4 +65,9 @@ public class ChatroomController {
   public ResponseEntity<JSONArray> getChats(@RequestBody String chatroomId) {
     return this.chatroomService.getChats(chatroomId);
   }
+
+  @PostMapping("/openaiTest")
+  public String postChat(@RequestBody String post) {
+    return this.chatroomService.openaiContentRating(post);
+  }
 }
