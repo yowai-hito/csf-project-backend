@@ -19,11 +19,11 @@ public class ChatroomRepository {
   @Autowired
   JdbcTemplate jdbc;
 
-  public int createChatroom(byte[] byteUuid, String chatroomName){
-    return jdbc.update(SQL_CHATROOM_CREATE_CHATROOM, byteUuid, chatroomName);
+  public int createChatroom(String uuid, String chatroomName){
+    return jdbc.update(SQL_CHATROOM_CREATE_CHATROOM, uuid, chatroomName);
   }
 
-  public int inviteToChatroom (byte[] chatroomId, int accountId){
+  public int inviteToChatroom (String chatroomId, String accountId){
     return jdbc.update(SQL_CHATROOM_ADD_TO_CHATROOM, chatroomId, accountId);
   }
 
@@ -56,5 +56,48 @@ public class ChatroomRepository {
       return Optional.empty();
     }
     
+  }
+
+  public Optional<JSONArray> getChatroomUsers (String chatroomId) {
+    try {
+      return jdbc.query(SQL_CHATROOM_SELECT_CHATROOM_USERS, 
+      (ResultSet rs) -> {
+        JSONArray chatroomUsers = new JSONArray();
+        while (rs.next()){
+          JSONObject chatroomUserDetails = new JSONObject();
+          chatroomUserDetails.put("userHandles", rs.getString("account_name"));
+          chatroomUserDetails.put("userId", rs.getInt("account_id"));
+          chatroomUsers.add(chatroomUserDetails);
+        }   
+        return Optional.of(chatroomUsers);
+      },
+      chatroomId);
+    } catch (Exception e) {
+      return Optional.empty();
+    }
+  }
+
+  public int postChat(String accountId, String chatroomId, String post){
+    return jdbc.update(SQL_CHATROOM_POST_TO_CHATROOM, chatroomId, accountId, post);
+  }
+
+  public Optional<JSONArray> getChats (String chatroomId) {
+    try {
+      return jdbc.query(SQL_CHATROOM_GET_CHATROOM_POSTS, 
+      (ResultSet rs) -> {
+        JSONArray chatPosts = new JSONArray();
+        while (rs.next()){
+          JSONObject chatPost = new JSONObject();
+          chatPost.put("chatroomId", rs.getString("chatroom_id"));
+          chatPost.put("userId", rs.getInt("account_id"));
+          chatPost.put("post", rs.getInt("post"));
+          chatPosts.add(chatPost);
+        }   
+        return Optional.of(chatPosts);
+      },
+      chatroomId);
+    } catch (Exception e) {
+      return Optional.empty();
+    }
   }
 }
