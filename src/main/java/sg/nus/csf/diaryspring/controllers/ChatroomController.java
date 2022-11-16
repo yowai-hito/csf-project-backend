@@ -17,6 +17,7 @@ import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import sg.nus.csf.diaryspring.models.CreateChatroomRequest;
 import sg.nus.csf.diaryspring.models.InviteChatroomRequest;
+import sg.nus.csf.diaryspring.models.PostChatRequest;
 import sg.nus.csf.diaryspring.services.ChatroomService;
 
 @RestController
@@ -36,7 +37,7 @@ public class ChatroomController {
   }
 
   @PostMapping("/invite")
-  public ResponseEntity<Object> inviteToChatroom(@RequestBody InviteChatroomRequest inviteChatroomRequest) {
+  public ResponseEntity<JSONObject> inviteToChatroom(@RequestBody InviteChatroomRequest inviteChatroomRequest) {
     return this.chatroomService.inviteToChatroom(inviteChatroomRequest);
   }
 
@@ -49,4 +50,24 @@ public class ChatroomController {
   public ResponseEntity<JSONArray> getUserChatrooms(@RequestParam String userId) {
     return this.chatroomService.getUserChatrooms(userId);
   }
+
+  @PostMapping("/chatroomUsers")
+  public ResponseEntity<JSONArray> getChatroomUsers(@RequestBody String chatroomId) {
+    return this.chatroomService.getChatroomUsers(chatroomId);
+  }
+
+  @PostMapping("/post")
+  public ResponseEntity<JSONObject> postChat(@RequestBody PostChatRequest req) {
+    return this.chatroomService.postChat(req);
+  }
+
+  @PostMapping("/getChats")
+  public ResponseEntity<JSONArray> getChats(@RequestBody String chatroomId) {
+    return this.chatroomService.getChats(chatroomId);
+  }
+
+  // @PostMapping("/openaiTest")
+  // public String postChat(@RequestBody String post) {
+  //   return this.chatroomService.openaiContentRating(post);
+  // }
 }

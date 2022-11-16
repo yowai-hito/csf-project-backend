@@ -1,20 +1,18 @@
 package sg.nus.csf.diaryspring.models;
 
-import java.util.List;
-
 public class InviteChatroomRequest {
-  private List<String> userHandles;
-  private byte[] chatroomId;
-  public List<String> getUserHandles() {
-    return userHandles;
+  private String userHandle;
+  private String chatroomId;
+  public String getUserHandle() {
+    return userHandle;
   }
-  public void setUserHandles(List<String> userHandles) {
-    this.userHandles = userHandles;
+  public void setUserHandle(String userHandle) {
+    this.userHandle = userHandle;
   }
-  public byte[] getChatroomId() {
+  public String getChatroomId() {
     return chatroomId;
   }
-  public void setChatroomId(byte[] chatroomId) {
+  public void setChatroomId(String chatroomId) {
     this.chatroomId = chatroomId;
   }
 }

@@ -32,6 +32,7 @@ create table chatroom_chats (
   chatroom_id VARCHAR(32),
   account_id int NOT NULL,
   post varchar(500) NOT NULL,
+  content_rating float,
 
   CONSTRAINT fk_chatroom_post_id
     FOREIGN KEY (chatroom_id) REFERENCES chatrooms(chatroom_id),

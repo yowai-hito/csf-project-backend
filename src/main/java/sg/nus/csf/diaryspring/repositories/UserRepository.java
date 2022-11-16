@@ -41,22 +41,16 @@ public class UserRepository {
       user.getUsername(), user.getPassword(), user.getRole(), user.getHandle(), user.getEmail());
   }
 
-  public List<Integer> getUserIdFromHandles (List<String> userHandles) {
-    
-    String queryNargs = String.join(",", Collections.nCopies(userHandles.size(), "?"));
-    String sqlQuery = String.format(SQL_USERS_SELECT_USERID_FROM_HANDLE + "(%s)", queryNargs);
-    List<Integer> userIds = new ArrayList<>();
-
-    return jdbc.query(sqlQuery,
-    (ResultSet rs) -> {
-        if (!rs.next()){return new ArrayList<>();}
-        userIds.add(rs.getInt("account_id"));
-        return userIds;
-    },
-    userHandles.toArray());
-  }
-
   public int changeEmail(String userId, String newEmail){
     return jdbc.update(SQL_USERS_CHANGE_EMAIL, newEmail, userId);
+  }
+
+  public Optional<String> getUserIdWithHandle(String userHandle) {
+    return jdbc.query(SQL_USERS_SELECT_USERID_FROM_HANDLE, 
+    (ResultSet rs) -> {
+        if (!rs.next()){return Optional.empty();}
+        return Optional.of(rs.getString("account_id"));
+    },
+    userHandle);
   }
 }
