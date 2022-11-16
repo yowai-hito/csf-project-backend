@@ -81,7 +81,7 @@ public class ChatroomRepository {
     return jdbc.update(SQL_CHATROOM_POST_TO_CHATROOM, chatroomId, accountId, post);
   }
 
-  public Optional<JSONArray> getChats (String chatroomId) {
+  public Optional<JSONArray> getChats(String chatroomId) {
     try {
       return jdbc.query(SQL_CHATROOM_GET_CHATROOM_POSTS, 
       (ResultSet rs) -> {
@@ -90,7 +90,7 @@ public class ChatroomRepository {
           JSONObject chatPost = new JSONObject();
           chatPost.put("chatroomId", rs.getString("chatroom_id"));
           chatPost.put("userId", rs.getInt("account_id"));
-          chatPost.put("post", rs.getInt("post"));
+          chatPost.put("post", rs.getString("post"));
           chatPosts.add(chatPost);
         }   
         return Optional.of(chatPosts);
