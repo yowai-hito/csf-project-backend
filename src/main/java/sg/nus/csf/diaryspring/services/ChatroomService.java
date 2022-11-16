@@ -136,7 +136,7 @@ public class ChatroomService {
       responseBody.put("Success", "Post has successfully been uploaded!");
     } catch (Exception e) {
       responseStatus = HttpStatus.resolve(400);
-      responseBody.put("Error", "Failed to retrieve chatroom name");
+      responseBody.put("Error", "Failed to post");
     }
     return new ResponseEntity<>(responseBody, responseHeaders, responseStatus);
   }
@@ -148,7 +148,7 @@ public class ChatroomService {
     responseHeaders.set("Content-Type","application/json");
     responseHeaders.set("Accept", "application/json");
     try {
-      responseBody = this.chatroomRepository.getChats(chatroomId).get();
+      responseBody = this.chatroomRepository.getChats(chatroomId);
     } catch (Exception e) {
       responseStatus = HttpStatus.resolve(400);
       JSONObject body = new JSONObject();
