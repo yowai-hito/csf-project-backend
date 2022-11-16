@@ -91,6 +91,7 @@ public class ChatroomRepository {
           chatPost.put("chatroomId", rs.getString("chatroom_id"));
           chatPost.put("userId", rs.getInt("account_id"));
           chatPost.put("post", rs.getString("post"));
+          chatPost.put("handle", rs.getString("account_handle"));
           chatPosts.add(chatPost);
         }   
         return Optional.of(chatPosts);

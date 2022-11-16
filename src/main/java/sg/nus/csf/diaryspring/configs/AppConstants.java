@@ -26,8 +26,10 @@ public class AppConstants {
   public static final String SQL_CHATROOM_POST_TO_CHATROOM = "INSERT INTO csf_project.chatroom_chats(chatroom_id, account_id, post) " +
   "VALUES (?,?,?)";
 
-  public static final String SQL_CHATROOM_GET_CHATROOM_POSTS = "SELECT chatroom_id, account_id, post " +
-  "FROM csf_project.chatroom_chats WHERE chatroom_id = ?";
+  public static final String SQL_CHATROOM_GET_CHATROOM_POSTS = "SELECT csf_project.chatroom_chats.chatroom_id," +
+  "csf_project.chatroom_chats.account_id, csf_project.chatroom_chats.post, csf_project.users.account_handle " + 
+  "FROM csf_project.chatroom_chats LEFT JOIN csf_project.users ON csf_project.chatroom_chats.account_id = " +
+  "csf_project.users.account_id WHERE chatroom_id = ?";
 
   public static final String SQL_CHATROOM_SELECT_USER_CHATROOMS = "SELECT csf_project.chatrooms.chatroom_name, " +
   "csf_project.chatrooms.chatroom_id, csf_project.chatroom_users.account_id FROM csf_project.chatrooms RIGHT JOIN" +

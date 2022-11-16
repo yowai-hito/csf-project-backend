@@ -31,8 +31,8 @@ public class ChatroomService {
   @Autowired
   UserRepository userRepository;
 
-  @Value("${openai.api.key}")
-  String openaiApiKey;
+  // @Value("${openai.api.key}")
+  // String openaiApiKey;
 
   public ResponseEntity<Object> createChatroom(CreateChatroomRequest req) {
     
@@ -148,7 +148,7 @@ public class ChatroomService {
     responseHeaders.set("Content-Type","application/json");
     responseHeaders.set("Accept", "application/json");
     try {
-      responseBody = this.chatroomRepository.getChats(chatroomId);
+      responseBody = this.chatroomRepository.getChats(chatroomId).get();
     } catch (Exception e) {
       responseStatus = HttpStatus.resolve(400);
       JSONObject body = new JSONObject();
@@ -158,25 +158,25 @@ public class ChatroomService {
     return new ResponseEntity<>(responseBody, responseHeaders, responseStatus);
   }
 
-  public String openaiContentRating(String post){
-    RestTemplate template = new RestTemplate();
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-    headers.add("Authorization", "Bearer " + openaiApiKey);
-    JSONObject body = new JSONObject();
-    body.put("model", "content-filter-alpha");
-    body.put("prompt", "<|endoftext|>%s\n--\nLabel:".format(post));
-    body.put("max_tokens", 1);
-    body.put("user",0);
-    body.put("temperature", 0.0);
-    body.put("top_p", 0);
-    body.put("logprobs", 10);
+  // public String openaiContentRating(String post){
+  //   RestTemplate template = new RestTemplate();
+  //   HttpHeaders headers = new HttpHeaders();
+  //   headers.setContentType(MediaType.APPLICATION_JSON);
+  //   headers.add("Authorization", "Bearer " + openaiApiKey);
+  //   JSONObject body = new JSONObject();
+  //   body.put("model", "content-filter-alpha");
+  //   body.put("prompt", "<|endoftext|>%s\n--\nLabel:".format(post));
+  //   body.put("max_tokens", 1);
+  //   body.put("user",0);
+  //   body.put("temperature", 0.0);
+  //   body.put("top_p", 0);
+  //   body.put("logprobs", 10);
 
-    String endpoint = UriComponentsBuilder
-        .fromUriString("https://api.openai.com/v1/completions")
-        .build().toString();
+  //   String endpoint = UriComponentsBuilder
+  //       .fromUriString("https://api.openai.com/v1/completions")
+  //       .build().toString();
 
-    HttpEntity<String> request = new HttpEntity<String>(body.toJSONString(), headers);
-    return template.postForObject(endpoint, request, String.class);
-  }
+  //   HttpEntity<String> request = new HttpEntity<String>(body.toJSONString(), headers);
+  //   return template.postForObject(endpoint, request, String.class);
+  // }
 }

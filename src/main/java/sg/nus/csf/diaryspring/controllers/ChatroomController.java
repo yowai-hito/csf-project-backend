@@ -66,8 +66,8 @@ public class ChatroomController {
     return this.chatroomService.getChats(chatroomId);
   }
 
-  @PostMapping("/openaiTest")
-  public String postChat(@RequestBody String post) {
-    return this.chatroomService.openaiContentRating(post);
-  }
+  // @PostMapping("/openaiTest")
+  // public String postChat(@RequestBody String post) {
+  //   return this.chatroomService.openaiContentRating(post);
+  // }
 }
